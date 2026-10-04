@@ -159,14 +159,19 @@
     .row-hover-transition {
       transition: border-color 0.15s ease, background-color 0.15s ease;
     }
-    .place {
-      cursor: pointer;
-      background: none;
-      border: 0;
-      padding: 0;
-      text-align: inherit;
-      font: inherit;
+    a.web-link {
       color: inherit;
+      font: inherit;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .map-btn {
+      background: #18E667;
+      color: #032612;
+    }
+    .map-btn:hover {
+      background: #0A3D22;
+      color: #F4FFF7;
     }
     :focus-visible {
       outline: 2px solid #0A3D22;
@@ -604,7 +609,7 @@
 <span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
 <span class="font-headline-md text-headline-md font-black text-[#0A3D22] dark:text-[#18E667]">1,98</span>
 </div>
-<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.8155, 1.8885, 'Karting Sallent')">
+<button class="map-btn px-3 py-2 rounded-xl text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.8155, 1.8885, 'Karting Sallent')">
             Ver mapa
           </button>
 </div>
@@ -631,7 +636,7 @@
 <span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
 <span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,94</span>
 </div>
-<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.6888, 2.7845, 'Karting Club Blanes')">
+<button class="map-btn px-3 py-2 rounded-xl text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.6888, 2.7845, 'Karting Club Blanes')">
             Ver mapa
           </button>
 </div>
@@ -658,7 +663,7 @@
 <span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
 <span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,91</span>
 </div>
-<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.3142, 2.0198, 'Gené Karting Viladecans')">
+<button class="map-btn px-3 py-2 rounded-xl text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.3142, 2.0198, 'Gené Karting Viladecans')">
             Ver mapa
           </button>
 </div>
@@ -685,7 +690,7 @@
 <span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
 <span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,86</span>
 </div>
-<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.3831, 2.0519, 'Indoor Karting Barcelona')">
+<button class="map-btn px-3 py-2 rounded-xl text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.3831, 2.0519, 'Indoor Karting Barcelona')">
             Ver mapa
           </button>
 </div>
@@ -712,7 +717,7 @@
 <span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
 <span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,84</span>
 </div>
-<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.2185, 1.5369, 'Karting Vendrell')">
+<button class="map-btn px-3 py-2 rounded-xl text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.2185, 1.5369, 'Karting Vendrell')">
             Ver mapa
           </button>
 </div>
@@ -739,7 +744,7 @@
 <span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
 <span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,77</span>
 </div>
-<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.6361, 2.3614, 'Karting Cardedeu')">
+<button class="map-btn px-3 py-2 rounded-xl text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.6361, 2.3614, 'Karting Cardedeu')">
             Ver mapa
           </button>
 </div>
@@ -766,7 +771,7 @@
 <span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
 <span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,75</span>
 </div>
-<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.6377, 2.3021, 'Nürburgreen Indoor')">
+<button class="map-btn px-3 py-2 rounded-xl text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.6377, 2.3021, 'Nürburgreen Indoor')">
             Ver mapa
           </button>
 </div>
@@ -793,7 +798,7 @@
 <span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
 <span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,69</span>
 </div>
-<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.5947, 1.7082, 'Karting ParcMotor Castellolí')">
+<button class="map-btn px-3 py-2 rounded-xl text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.5947, 1.7082, 'Karting ParcMotor Castellolí')">
             Ver mapa
           </button>
 </div>
@@ -820,7 +825,7 @@
 <span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
 <span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,65</span>
 </div>
-<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.3061, 2.0229, 'Karting Minilandia Viladecans')">
+<button class="map-btn px-3 py-2 rounded-xl text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.3061, 2.0229, 'Karting Minilandia Viladecans')">
             Ver mapa
           </button>
 </div>
@@ -847,7 +852,7 @@
 <span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
 <span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,58</span>
 </div>
-<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.3468, 1.6978, 'Scratch Indoor Penedès')">
+<button class="map-btn px-3 py-2 rounded-xl text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.3468, 1.6978, 'Scratch Indoor Penedès')">
             Ver mapa
           </button>
 </div>
@@ -881,7 +886,7 @@
 <div class="flex flex-col items-center md:items-start gap-1">
 <span class="font-headline-sm text-headline-sm text-primary dark:text-inverse-on-surface font-extrabold tracking-tight">BCN KARTING</span>
 <p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant text-center md:text-left">
-          Ranking de alquiler a una hora de Barcelona. El nombre de cada circuito abre su punto en el mapa.
+          Ranking de alquiler a una hora de Barcelona. El nombre abre la web del circuito; Ver mapa, su punto.
         </p>
 </div>
 </div>
@@ -965,23 +970,28 @@
       if (hit) go(hit.id);
     };
 
-    function wirePlace(el) {
-      if (el.classList.contains('place')) return;
+    function wireWeb(el) {
+      if (el.closest('a') || el.querySelector('a')) return;
       const hit = findTrack(el.textContent || '');
-      if (!hit) return;
-      el.classList.add('place');
-      el.setAttribute('role', 'link');
-      el.tabIndex = 0;
-      const run = () => go(hit.id);
-      el.addEventListener('click', run);
-      el.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); run(); }
-      });
+      if (!hit || !hit.web) return;
+      const a = document.createElement('a');
+      a.className = 'web-link';
+      a.href = hit.web;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.textContent = el.textContent;
+      el.textContent = '';
+      el.appendChild(a);
     }
-    document.querySelectorAll('h3, .space-y-2\\.5 > div span:first-child').forEach(wirePlace);
+    document.querySelectorAll('h3, .space-y-2\\.5 > div span:first-child').forEach(wireWeb);
+    const h1 = document.querySelector('h1');
+    const lead = tracks.find(t => t.id === 'sallent');
+    if (h1 && lead && h1.textContent.indexOf('Sallent') !== -1) {
+      h1.innerHTML = h1.textContent.replace('Sallent', '<a class="web-link" href="' + lead.web + '" target="_blank" rel="noopener noreferrer">Sallent</a>');
+    }
     document.querySelectorAll('main span').forEach(el => {
-      if (el.childElementCount || el.textContent.trim().length > 48) return;
-      wirePlace(el);
+      if (el.childElementCount || el.closest('p') || el.textContent.trim().length > 48) return;
+      wireWeb(el);
     });
 
     document.querySelectorAll('.space-y-2\\.5 > div').forEach(row => {

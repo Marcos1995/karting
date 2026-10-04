@@ -7,7 +7,7 @@
 - Vista local: `index.html`
 
 ## Estado
-- Ranking de 10 kartings de alquiler a ≤60 min en coche desde Plaça de Catalunya (OSRM, sin tráfico, 4 oct 2026), filtro outdoor/indoor, nota Laya y mapa OSM.
+- Ranking de 10 kartings de alquiler a ≤60 min en coche desde Plaça de Catalunya (OSRM, sin tráfico, 4 oct 2026), filtro outdoor/indoor, nota Laya y mapa OSM. El nombre (título, gráficos, chips) abre la web oficial; «Ver mapa» centra el punto y en ambos temas es #18E667 con texto #032612.
 - Fuera del corte (no listados): Lloret 62, Altafulla 68, Osona 69, Tarraco 78, Salou 80, Palamós 92, Calafat 106.
 
 ## Stack
