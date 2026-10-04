@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<script>
+(function () {
+  try {
+    var s = localStorage.getItem('kart-theme');
+    var dark = s ? s === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (dark) document.documentElement.classList.add('dark');
+  } catch (e) {}
+})();
+</script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BCN KART RANKINGS — Circuitos de alquiler a ≤60 min de Barcelona</title>
+<!-- Google Fonts: Public Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Leaflet CSS & JS for OpenStreetMap -->
+<link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed": "#c5eccc",
+            "tertiary-container": "#1a3b25",
+            "error-container": "#ffdad6",
+            "surface": "#f2fcf4",
+            "secondary": "#006e2c",
+            "on-tertiary": "#ffffff",
+            "primary-fixed": "#bbefc7",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed-variant": "#205033",
+            "secondary-container": "#45ff7c",
+            "tertiary-fixed-dim": "#aad0b1",
+            "inverse-surface": "#2a322d",
+            "outline-variant": "#c1c9c0",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed": "#002108",
+            "on-error-container": "#93000a",
+            "error": "#ba1a1a",
+            "surface-variant": "#dce5dd",
+            "inverse-primary": "#9fd2ad",
+            "primary-container": "#0a3d22",
+            "secondary-fixed-dim": "#12e465",
+            "on-primary": "#ffffff",
+            "secondary-fixed": "#68ff8a",
+            "surface-container-low": "#edf6ee",
+            "primary-fixed-dim": "#9fd2ad",
+            "background": "#f2fcf4",
+            "surface-container-highest": "#dce5dd",
+            "surface-container": "#e7f0e9",
+            "surface-bright": "#f2fcf4",
+            "surface-dim": "#d3dcd5",
+            "on-surface-variant": "#414942",
+            "surface-container-high": "#e1eae3",
+            "inverse-on-surface": "#eaf3eb",
+            "on-secondary-container": "#00722e",
+            "on-primary-fixed": "#00210f",
+            "tertiary": "#022511",
+            "on-secondary-fixed-variant": "#00531f",
+            "on-error": "#ffffff",
+            "on-tertiary-fixed-variant": "#2c4e36",
+            "primary": "#002611",
+            "on-surface": "#151d19",
+            "surface-tint": "#396849",
+            "on-tertiary-fixed": "#00210e",
+            "on-tertiary-container": "#81a689",
+            "on-primary-container": "#77a985",
+            "outline": "#717971",
+            "on-background": "#151d19"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1.25rem",
+            "3xl": "1.75rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline-md": ["Public Sans"],
+            "title-sm": ["Public Sans"],
+            "body-sm": ["Public Sans"],
+            "metric-stat": ["Public Sans"],
+            "display-xl": ["Public Sans"],
+            "display-xl-mobile": ["Public Sans"],
+            "headline-lg-mobile": ["Public Sans"],
+            "headline-lg": ["Public Sans"],
+            "body-md": ["Public Sans"],
+            "label-data": ["Public Sans"]
+          },
+          "fontSize": {
+            "headline-md": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "title-sm": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "500" }],
+            "metric-stat": ["44px", { "lineHeight": "44px", "letterSpacing": "-0.04em", "fontWeight": "900" }],
+            "display-xl": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.04em", "fontWeight": "900" }],
+            "display-xl-mobile": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.03em", "fontWeight": "900" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "900" }],
+            "headline-lg": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.03em", "fontWeight": "900" }],
+            "body-md": ["15px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-data": ["11px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "800" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+    }
+    .theme-disk {
+      left: 4px;
+      right: auto;
+      transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1), right 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .dark .theme-disk {
+      left: auto;
+      right: 4px;
+    }
+    html.dark body {
+      background: #07140C;
+      color: #F4FFF7;
+    }
+    h1, p { overflow-wrap: anywhere; }
+    html, body { overflow-x: clip; }
+    #circuit-map {
+      height: 380px;
+      width: 100%;
+      border-radius: 1.25rem;
+      z-index: 10;
+    }
+    .leaflet-popup-content-wrapper {
+      border-radius: 0.75rem;
+      font-family: 'Public Sans', sans-serif;
+      box-shadow: 0 4px 12px rgba(3, 38, 18, 0.15);
+    }
+    .row-hover-transition {
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+    .place {
+      cursor: pointer;
+      background: none;
+      border: 0;
+      padding: 0;
+      text-align: inherit;
+      font: inherit;
+      color: inherit;
+    }
+    :focus-visible {
+      outline: 2px solid #0A3D22;
+      outline-offset: 2px;
+    }
+    .dark :focus-visible { outline-color: #18E667; }
+    @media (prefers-reduced-motion: reduce) {
+      .theme-disk, .row-hover-transition { transition: none; }
+      .animate-pulse { animation: none; }
+    }
+    .leaflet-popup-content a.ruta {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #0A3D22;
+      color: #fff;
+      font-weight: 800;
+      text-decoration: none;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface antialiased selection:bg-secondary-fixed selection:text-tertiary min-h-screen flex flex-col transition-colors duration-200">
+<!-- TopAppBar (Shared Component JSON) -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-4 lg:px-10 h-16 gap-3">
+<!-- Leading Icon & Brand Name -->
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-inverse-primary" data-icon="sports_motorsports">sports_motorsports</span>
+<span class="font-black tracking-tight text-sm sm:text-headline-md text-primary dark:text-inverse-on-surface uppercase leading-none">BCN KART</span>
+</div>
+<!-- Trailing Action: Sun/Moon Tactile Theme Switcher -->
+<div class="flex items-center gap-3">
+<button aria-label="Cambiar tema de color" class="relative flex items-center justify-between w-14 h-8 px-1.5 rounded-full bg-surface-container-high dark:bg-surface-variant border border-outline-variant dark:border-outline cursor-pointer focus:outline-none focus:ring-2 focus:ring-secondary-fixed" id="theme-toggle">
+<!-- Geometric Sun Icon -->
+<svg class="w-4 h-4 text-primary dark:text-outline z-10" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="4"></circle>
+<path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41m14.14-14.14l-1.41 1.41"></path>
+</svg>
+<!-- Geometric Moon Icon -->
+<svg class="w-4 h-4 text-outline dark:text-on-secondary-fixed z-10" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+</svg>
+<!-- Sliding Solid Disk Token -->
+<div class="theme-disk absolute left-1 w-6 h-6 rounded-full bg-primary-container dark:bg-secondary-fixed-dim shadow-sm"></div>
+</button>
+</div>
+</div>
+</header>
+<!-- Editorial Shell Canvas -->
+<main class="flex-grow w-full max-w-7xl mx-auto px-4 lg:px-10 py-6 md:py-10 flex flex-col gap-8 md:gap-12">
+<!-- 1. HEADER EDITORIAL Y ENCABEZADO -->
+<section class="flex flex-col gap-3">
+<div class="flex flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:items-center max-w-full">
+<span class="font-label-data text-label-data uppercase tracking-wider px-2.5 py-1 rounded bg-surface-container-highest text-on-surface-variant dark:bg-inverse-surface dark:text-inverse-primary border border-outline-variant/40">
+          10 circuitos · ≤60 min · octubre 2026
+        </span>
+<span class="font-label-data text-label-data px-2.5 py-1 rounded-full bg-primary-fixed text-on-primary-fixed border border-primary-fixed-dim flex items-center gap-1.5 font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+          OSRM sin tráfico · nota Laya
+        </span>
+</div>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary dark:text-inverse-on-surface font-black tracking-tight max-w-4xl">
+        Sallent es el karting más divertido a una hora de Barcelona
+      </h1>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant max-w-3xl">
+        Diez circuitos de alquiler a 60 min o menos en coche desde Plaça de Catalunya, sin tráfico. La nota (0 soso – 3 engancha) la puso Laya, con preferencia por el outdoor largo y variado. Confianza media: todas caben entre 1,58 y 1,98.
+      </p>
+</section>
+<!-- 2. FILA DE KPIS (4 Tarjetas asimétricas) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- KPI 1 (HÉROE - Verde Sólido #18E667 / #032612) -->
+<div class="rounded-3xl p-5 bg-[#18E667] text-[#032612] border border-[#032612]/15 flex flex-col justify-between shadow-none">
+<div class="flex justify-between items-center mb-3">
+<span class="font-label-data text-label-data uppercase tracking-wider text-[#032612] font-black">Nota de Sallent</span>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-[#032612]/10 text-[#032612] font-extrabold">
+            ▲ la más alta de 10
+          </span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-metric-stat text-metric-stat font-black text-[#032612] tracking-tighter">1,98</span>
+<span class="font-title-sm text-title-sm font-bold text-[#032612]/75">/ 3,00</span>
+</div>
+<div class="mt-2 text-xs font-semibold text-[#032612]/80">
+          Outdoor de 1.450 m · Sodikart SR4 · 53 min
+        </div>
+</div>
+<!-- KPI 2 -->
+<div class="rounded-3xl p-5 bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/30 flex flex-col justify-between">
+<div class="flex justify-between items-center mb-3">
+<span class="font-label-data text-label-data uppercase tracking-wider text-on-surface-variant dark:text-inverse-primary font-bold">Outdoor</span>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-surface-container-high dark:bg-surface-variant text-on-surface font-extrabold">
+            ▲ 60% del total
+          </span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-metric-stat text-metric-stat font-black text-primary dark:text-inverse-on-surface tracking-tighter">6</span>
+<span class="font-title-sm text-title-sm text-on-surface-variant font-bold">circuitos</span>
+</div>
+<div class="mt-2 text-xs text-on-surface-variant dark:text-outline-variant">
+          Al aire libre. La lluvia puede cerrar la pista
+        </div>
+</div>
+<!-- KPI 3 -->
+<div class="rounded-3xl p-5 bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/30 flex flex-col justify-between">
+<div class="flex justify-between items-center mb-3">
+<span class="font-label-data text-label-data uppercase tracking-wider text-on-surface-variant dark:text-inverse-primary font-bold">Indoor</span>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-surface-container-high dark:bg-surface-variant text-on-surface font-extrabold">
+            ▼ 40% del total
+          </span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-metric-stat text-metric-stat font-black text-primary dark:text-inverse-on-surface tracking-tighter">4</span>
+<span class="font-title-sm text-title-sm text-on-surface-variant font-bold">circuitos</span>
+</div>
+<div class="mt-2 text-xs text-on-surface-variant dark:text-outline-variant">
+          Cubiertos: se corre llueva o no
+        </div>
+</div>
+<!-- KPI 4 -->
+<div class="rounded-3xl p-5 bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/30 flex flex-col justify-between">
+<div class="flex justify-between items-center mb-3">
+<span class="font-label-data text-label-data uppercase tracking-wider text-on-surface-variant dark:text-inverse-primary font-bold">El más lejos (Castellolí)</span>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-extrabold">
+            ▼ 3 min bajo el corte
+          </span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-metric-stat text-metric-stat font-black text-primary dark:text-inverse-on-surface tracking-tighter">57</span>
+<span class="font-title-sm text-title-sm text-on-surface-variant font-bold">min</span>
+</div>
+<div class="mt-2 text-xs text-on-surface-variant dark:text-outline-variant">
+          ParcMotor, el trayecto más largo que aún entra
+        </div>
+</div>
+</section>
+<!-- 3. DOS GRÁFICOS DE DATOS COMPARATIVOS -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Gráfico 1: Quién engancha más (Fun Score 0 - 3) -->
+<div class="rounded-3xl p-6 bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/30 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-1">
+<h2 class="font-title-sm text-title-sm font-black text-primary dark:text-inverse-on-surface">
+              Quién engancha más
+            </h2>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded bg-surface-container-high dark:bg-surface-variant text-on-surface font-bold">
+              Escala Laya (0 – 3)
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant mb-6">
+            Misma rúbrica para los 10. El verde marca al primero. El tiempo en coche no entra en la nota.
+          </p>
+<!-- Data Bars -->
+<div class="space-y-2.5">
+<!-- Sallent -->
+<div>
+<div class="flex justify-between text-xs font-bold text-primary dark:text-inverse-on-surface mb-1">
+<span>1. Karting Sallent</span>
+<span class="font-extrabold">1,98</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-[#18E667] h-full rounded-full" style="width: 66%;"></div>
+</div>
+</div>
+<!-- Blanes -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>2. Karting Club Blanes</span>
+<span class="font-bold">1,94</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 64.6%;"></div>
+</div>
+</div>
+<!-- Gené -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>3. Gené Karting</span>
+<span class="font-bold">1,91</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 63.6%;"></div>
+</div>
+</div>
+<!-- Indoor BCN -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>4. Indoor Karting Barcelona</span>
+<span class="font-bold">1,86</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 62%;"></div>
+</div>
+</div>
+<!-- Vendrell -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>5. Karting Vendrell</span>
+<span class="font-bold">1,84</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 61.3%;"></div>
+</div>
+</div>
+<!-- Cardedeu -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>6. Karting Cardedeu</span>
+<span class="font-bold">1,77</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-outline h-full rounded-full" style="width: 59%;"></div>
+</div>
+</div>
+<!-- Nürburgreen -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>7. Nürburgreen Indoor</span>
+<span class="font-bold">1,75</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-outline h-full rounded-full" style="width: 58.3%;"></div>
+</div>
+</div>
+<!-- Castellolí -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>8. Karting Castellolí</span>
+<span class="font-bold">1,69</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-outline h-full rounded-full" style="width: 56.3%;"></div>
+</div>
+</div>
+<!-- Minilandia -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>9. Karting Minilandia</span>
+<span class="font-bold">1,65</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-outline h-full rounded-full" style="width: 55%;"></div>
+</div>
+</div>
+<!-- Scratch -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>10. Scratch Indoor Penedès</span>
+<span class="font-bold">1,58</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-outline h-full rounded-full" style="width: 52.6%;"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-6 pt-3 border-t border-outline-variant/30 flex items-center justify-between text-xs text-on-surface-variant">
+<span>Nota de diversión, no de minutos</span>
+<span class="font-bold font-label-data text-label-data">MAX: 3,00</span>
+</div>
+</div>
+<!-- Gráfico 2: Minutos desde Plaça de Catalunya (Color Neutro Analítico) -->
+<div class="rounded-3xl p-6 bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/30 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-1">
+<h2 class="font-title-sm text-title-sm font-black text-primary dark:text-inverse-on-surface">
+              Minutos desde Plaça de Catalunya
+            </h2>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded bg-surface-container-high dark:bg-surface-variant text-on-surface font-bold">
+              Sin tráfico
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant mb-6">
+            Trayecto en coche particular sin congestión. Tonos neutros para disociar velocidad de diversión.
+          </p>
+<!-- Data Bars (Neutros) -->
+<div class="space-y-2.5">
+<!-- Minilandia (18 min) -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>Minilandia (Viladecans)</span>
+<span class="font-bold">18 min</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-on-surface-variant/40 dark:bg-outline h-full rounded-full" style="width: 30%;"></div>
+</div>
+</div>
+<!-- Indoor BCN (21 min) -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>Indoor Karting BCN (Sant Feliu)</span>
+<span class="font-bold">21 min</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-on-surface-variant/40 dark:bg-outline h-full rounded-full" style="width: 35%;"></div>
+</div>
+</div>
+<!-- Gené (22 min) -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>Gené Karting (Vilamarina)</span>
+<span class="font-bold">22 min</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-on-surface-variant/40 dark:bg-outline h-full rounded-full" style="width: 36.6%;"></div>
+</div>
+</div>
+<!-- Cardedeu (36 min) -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>Karting Cardedeu</span>
+<span class="font-bold">36 min</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-on-surface-variant/50 dark:bg-outline h-full rounded-full" style="width: 60%;"></div>
+</div>
+</div>
+<!-- Nürburgreen (36 min) -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>Nürburgreen Indoor (Les Franqueses)</span>
+<span class="font-bold">36 min</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-on-surface-variant/50 dark:bg-outline h-full rounded-full" style="width: 60%;"></div>
+</div>
+</div>
+<!-- Scratch (49 min) -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>Scratch Indoor (Vilafranca)</span>
+<span class="font-bold">49 min</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-on-surface-variant/60 dark:bg-outline h-full rounded-full" style="width: 81.6%;"></div>
+</div>
+</div>
+<!-- Sallent (53 min) -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>Karting Sallent</span>
+<span class="font-bold">53 min</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-on-surface-variant/70 dark:bg-outline h-full rounded-full" style="width: 88.3%;"></div>
+</div>
+</div>
+<!-- Vendrell (54 min) -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>Karting Vendrell</span>
+<span class="font-bold">54 min</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-on-surface-variant/70 dark:bg-outline h-full rounded-full" style="width: 90%;"></div>
+</div>
+</div>
+<!-- Blanes (56 min) -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>Karting Club Blanes</span>
+<span class="font-bold">56 min</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-on-surface-variant/80 dark:bg-outline h-full rounded-full" style="width: 93.3%;"></div>
+</div>
+</div>
+<!-- Castellolí (59 min) -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-on-surface-variant dark:text-outline-variant mb-1">
+<span>ParcMotor Castellolí</span>
+<span class="font-bold">57 min</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant rounded-full h-3 overflow-hidden">
+<div class="bg-on-surface-variant/90 dark:bg-outline h-full rounded-full" style="width: 95%;"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-6 pt-3 border-t border-outline-variant/30 flex items-center justify-between text-xs text-on-surface-variant">
+<span>Tiempo no proporcional al Fun Score</span>
+<span class="font-bold font-label-data text-label-data">CORTE: 60 MIN</span>
+</div>
+</div>
+</section>
+<!-- 4. CONTROL SEGMENTADO Y FILTRO PRINCIPAL (La Acción Principal) -->
+<section class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+<div>
+<h2 class="font-title-sm text-title-sm font-black text-primary dark:text-inverse-on-surface">
+          Tabla de Telemetría Comparada
+        </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant">
+          Haz clic para segmentar por tipo de pista o inspeccionar la ficha
+        </p>
+</div>
+<!-- Segmented Control Styled Pill Container -->
+<div class="inline-flex p-1.5 rounded-2xl bg-surface-container dark:bg-inverse-surface border border-outline-variant/40" role="tablist">
+<button class="filter-btn px-4 py-2 rounded-xl text-xs font-black tracking-wide bg-primary-container text-on-primary transition-all duration-150" id="filter-all" onclick="setFilter('all')">
+          Todos (10)
+        </button>
+<button class="filter-btn px-4 py-2 rounded-xl text-xs font-bold tracking-wide text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-inverse-on-surface transition-all duration-150" id="filter-outdoor" onclick="setFilter('outdoor')">
+          Outdoor (6)
+        </button>
+<button class="filter-btn px-4 py-2 rounded-xl text-xs font-bold tracking-wide text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-inverse-on-surface transition-all duration-150" id="filter-indoor" onclick="setFilter('indoor')">
+          Indoor (4)
+        </button>
+</div>
+</section>
+<!-- 5. LISTA CLASIFICATORIA RANKING (10 Circuitos Reales) -->
+<section class="flex flex-col gap-3">
+<!-- Circuito 1 (Líder Sallent) -->
+<div class="circuit-card row-hover-transition rounded-2xl p-4 md:p-5 bg-surface-container-lowest dark:bg-inverse-surface border-l-4 border-l-[#18E667] border-y border-r border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4" data-track-type="outdoor">
+<div class="flex items-start md:items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-primary-container text-[#18E667] font-black text-lg flex items-center justify-center shrink-0">
+            01
+          </div>
+<div>
+<div class="flex flex-wrap items-center gap-2 mb-1">
+<h3 class="font-title-sm text-title-sm font-black text-primary dark:text-inverse-on-surface">Karting Sallent</h3>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-black">OUTDOOR</span>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-bold">53 min</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant font-medium">
+              1.450 m en Sallent, asfaltado en 2020. Sodikart SR4 por encima de 85 km/h. También hay junior.
+            </p>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 pt-3 md:pt-0 border-t md:border-t-0 border-outline-variant/20 shrink-0">
+<div class="text-right">
+<span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
+<span class="font-headline-md text-headline-md font-black text-[#0A3D22] dark:text-[#18E667]">1,98</span>
+</div>
+<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.8155, 1.8885, 'Karting Sallent')">
+            Ver mapa
+          </button>
+</div>
+</div>
+<!-- Circuito 2 (Blanes) -->
+<div class="circuit-card row-hover-transition rounded-2xl p-4 md:p-5 bg-surface-container-lowest dark:bg-inverse-surface border-l-4 border-l-secondary border-y border-r border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4" data-track-type="outdoor">
+<div class="flex items-start md:items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-on-surface font-black text-lg flex items-center justify-center shrink-0">
+            02
+          </div>
+<div>
+<div class="flex flex-wrap items-center gap-2 mb-1">
+<h3 class="font-title-sm text-title-sm font-black text-primary dark:text-inverse-on-surface">Karting Club Blanes</h3>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-black">OUTDOOR</span>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-bold">56 min</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant font-medium">
+              Club en Blanes. Anuncia un kart racing de 390 cc. La web no publica los metros de pista.
+            </p>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 pt-3 md:pt-0 border-t md:border-t-0 border-outline-variant/20 shrink-0">
+<div class="text-right">
+<span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
+<span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,94</span>
+</div>
+<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.6888, 2.7845, 'Karting Club Blanes')">
+            Ver mapa
+          </button>
+</div>
+</div>
+<!-- Circuito 3 (Gené Karting) -->
+<div class="circuit-card row-hover-transition rounded-2xl p-4 md:p-5 bg-surface-container-lowest dark:bg-inverse-surface border-l-4 border-l-secondary border-y border-r border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4" data-track-type="indoor">
+<div class="flex items-start md:items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-on-surface font-black text-lg flex items-center justify-center shrink-0">
+            03
+          </div>
+<div>
+<div class="flex flex-wrap items-center gap-2 mb-1">
+<h3 class="font-title-sm text-title-sm font-black text-primary dark:text-inverse-on-surface">Gené Karting</h3>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-black">INDOOR</span>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-bold">22 min</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant font-medium">
+              Indoor de 450 m en Vilamarina. Lo fundaron Jordi y Marc Gené. Karts Sodikart, abierto todo el año.
+            </p>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 pt-3 md:pt-0 border-t md:border-t-0 border-outline-variant/20 shrink-0">
+<div class="text-right">
+<span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
+<span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,91</span>
+</div>
+<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.3142, 2.0198, 'Gené Karting Viladecans')">
+            Ver mapa
+          </button>
+</div>
+</div>
+<!-- Circuito 4 (Indoor Karting Barcelona) -->
+<div class="circuit-card row-hover-transition rounded-2xl p-4 md:p-5 bg-surface-container-lowest dark:bg-inverse-surface border-l-4 border-l-secondary border-y border-r border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4" data-track-type="indoor">
+<div class="flex items-start md:items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-on-surface font-black text-lg flex items-center justify-center shrink-0">
+            04
+          </div>
+<div>
+<div class="flex flex-wrap items-center gap-2 mb-1">
+<h3 class="font-title-sm text-title-sm font-black text-primary dark:text-inverse-on-surface">Indoor Karting Barcelona</h3>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-black">INDOOR</span>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-bold">21 min</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant font-medium">
+              Pista cubierta de 500 m en Sant Feliu de Llobregat. También hay bolos y laser tag.
+            </p>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 pt-3 md:pt-0 border-t md:border-t-0 border-outline-variant/20 shrink-0">
+<div class="text-right">
+<span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
+<span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,86</span>
+</div>
+<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.3831, 2.0519, 'Indoor Karting Barcelona')">
+            Ver mapa
+          </button>
+</div>
+</div>
+<!-- Circuito 5 (Karting Vendrell) -->
+<div class="circuit-card row-hover-transition rounded-2xl p-4 md:p-5 bg-surface-container-lowest dark:bg-inverse-surface border-l-4 border-l-outline-variant border-y border-r border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4" data-track-type="outdoor">
+<div class="flex items-start md:items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-on-surface font-black text-lg flex items-center justify-center shrink-0">
+            05
+          </div>
+<div>
+<div class="flex flex-wrap items-center gap-2 mb-1">
+<h3 class="font-title-sm text-title-sm font-black text-primary dark:text-inverse-on-surface">Karting Vendrell</h3>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-black">OUTDOOR</span>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-bold">54 min</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant font-medium">
+              Outdoor de 1.310 m en El Vendrell, más una pista infantil.
+            </p>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 pt-3 md:pt-0 border-t md:border-t-0 border-outline-variant/20 shrink-0">
+<div class="text-right">
+<span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
+<span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,84</span>
+</div>
+<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.2185, 1.5369, 'Karting Vendrell')">
+            Ver mapa
+          </button>
+</div>
+</div>
+<!-- Circuito 6 (Karting Cardedeu) -->
+<div class="circuit-card row-hover-transition rounded-2xl p-4 md:p-5 bg-surface-container-lowest dark:bg-inverse-surface border-l-4 border-l-outline-variant border-y border-r border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4" data-track-type="outdoor">
+<div class="flex items-start md:items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-on-surface font-black text-lg flex items-center justify-center shrink-0">
+            06
+          </div>
+<div>
+<div class="flex flex-wrap items-center gap-2 mb-1">
+<h3 class="font-title-sm text-title-sm font-black text-primary dark:text-inverse-on-surface">Karting Cardedeu</h3>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-black">OUTDOOR</span>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-bold">36 min</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant font-medium">
+              Outdoor de 731 m. Tandas con Sodikart SR4, Honda 270 cc y 11 CV.
+            </p>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 pt-3 md:pt-0 border-t md:border-t-0 border-outline-variant/20 shrink-0">
+<div class="text-right">
+<span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
+<span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,77</span>
+</div>
+<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.6361, 2.3614, 'Karting Cardedeu')">
+            Ver mapa
+          </button>
+</div>
+</div>
+<!-- Circuito 7 (Nürburgreen Indoor) -->
+<div class="circuit-card row-hover-transition rounded-2xl p-4 md:p-5 bg-surface-container-lowest dark:bg-inverse-surface border-l-4 border-l-outline-variant border-y border-r border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4" data-track-type="indoor">
+<div class="flex items-start md:items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-on-surface font-black text-lg flex items-center justify-center shrink-0">
+            07
+          </div>
+<div>
+<div class="flex flex-wrap items-center gap-2 mb-1">
+<h3 class="font-title-sm text-title-sm font-black text-primary dark:text-inverse-on-surface">Nürburgreen Indoor</h3>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-black">INDOOR</span>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-bold">36 min</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant font-medium">
+              Eléctrico en Les Franqueses. Hasta 50 trazados y una pista para derrapar.
+            </p>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 pt-3 md:pt-0 border-t md:border-t-0 border-outline-variant/20 shrink-0">
+<div class="text-right">
+<span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
+<span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,75</span>
+</div>
+<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.6377, 2.3021, 'Nürburgreen Indoor')">
+            Ver mapa
+          </button>
+</div>
+</div>
+<!-- Circuito 8 (Karting ParcMotor Castellolí) -->
+<div class="circuit-card row-hover-transition rounded-2xl p-4 md:p-5 bg-surface-container-lowest dark:bg-inverse-surface border-l-4 border-l-outline-variant border-y border-r border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4" data-track-type="outdoor">
+<div class="flex items-start md:items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-on-surface font-black text-lg flex items-center justify-center shrink-0">
+            08
+          </div>
+<div>
+<div class="flex flex-wrap items-center gap-2 mb-1">
+<h3 class="font-title-sm text-title-sm font-black text-primary dark:text-inverse-on-surface">Karting ParcMotor Castellolí</h3>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-black">OUTDOOR</span>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-bold">57 min</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant font-medium">
+              Outdoor de 1.340 m diseñado por Dani Pedrosa. Cambios de rasante y karts RT8 de 400 cc.
+            </p>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 pt-3 md:pt-0 border-t md:border-t-0 border-outline-variant/20 shrink-0">
+<div class="text-right">
+<span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
+<span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,69</span>
+</div>
+<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.5947, 1.7082, 'Karting ParcMotor Castellolí')">
+            Ver mapa
+          </button>
+</div>
+</div>
+<!-- Circuito 9 (Karting Minilandia) -->
+<div class="circuit-card row-hover-transition rounded-2xl p-4 md:p-5 bg-surface-container-lowest dark:bg-inverse-surface border-l-4 border-l-outline-variant border-y border-r border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4" data-track-type="outdoor">
+<div class="flex items-start md:items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-on-surface font-black text-lg flex items-center justify-center shrink-0">
+            09
+          </div>
+<div>
+<div class="flex flex-wrap items-center gap-2 mb-1">
+<h3 class="font-title-sm text-title-sm font-black text-primary dark:text-inverse-on-surface">Karting Minilandia</h3>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-black">OUTDOOR</span>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-bold">18 min</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant font-medium">
+              Parque al aire libre en Viladecans. Karts adultos de 270 cc y circuitos para niños.
+            </p>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 pt-3 md:pt-0 border-t md:border-t-0 border-outline-variant/20 shrink-0">
+<div class="text-right">
+<span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
+<span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,65</span>
+</div>
+<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.3061, 2.0229, 'Karting Minilandia Viladecans')">
+            Ver mapa
+          </button>
+</div>
+</div>
+<!-- Circuito 10 (Scratch Indoor Penedès) -->
+<div class="circuit-card row-hover-transition rounded-2xl p-4 md:p-5 bg-surface-container-lowest dark:bg-inverse-surface border-l-4 border-l-outline-variant border-y border-r border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4" data-track-type="indoor">
+<div class="flex items-start md:items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-on-surface font-black text-lg flex items-center justify-center shrink-0">
+            10
+          </div>
+<div>
+<div class="flex flex-wrap items-center gap-2 mb-1">
+<h3 class="font-title-sm text-title-sm font-black text-primary dark:text-inverse-on-surface">Scratch Indoor Penedès</h3>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-black">INDOOR</span>
+<span class="font-label-data text-label-data px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-bold">49 min</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant font-medium">
+              Indoor en Vilafranca del Penedès. Honda 270 cc y 9 CV. La web no publica los metros.
+            </p>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 pt-3 md:pt-0 border-t md:border-t-0 border-outline-variant/20 shrink-0">
+<div class="text-right">
+<span class="block text-xs uppercase tracking-wider text-on-surface-variant font-bold font-label-data">Fun Score</span>
+<span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-on-surface">1,58</span>
+</div>
+<button class="px-3 py-2 rounded-xl bg-surface-container hover:bg-[#18E667] hover:text-[#032612] text-xs font-bold transition-colors duration-150" onclick="focusTrack(41.3468, 1.6978, 'Scratch Indoor Penedès')">
+            Ver mapa
+          </button>
+</div>
+</div>
+</section>
+<!-- 6. REGIÓN DEL MAPA (Leaflet OpenStreetMap) -->
+<section class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#18E667] animate-pulse"></span>
+<h2 class="font-title-sm text-title-sm font-black text-primary dark:text-inverse-on-surface">
+            Mapa de circuitos (≤60 min BCN)
+          </h2>
+</div>
+<span class="font-label-data text-label-data text-on-surface-variant uppercase">Interactivo · OSM Carto</span>
+</div>
+<div class="rounded-3xl p-2 bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/30 overflow-hidden">
+<div id="circuit-map"></div>
+</div>
+</section>
+<!-- 7. METADATOS Y FUENTE EDITORIAL -->
+<section class="rounded-2xl p-4 bg-surface-container dark:bg-inverse-surface border border-outline-variant/20">
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant leading-relaxed">
+<strong>Fuente:</strong> minutos en coche con OSRM (origen Plaça de Catalunya, sin tráfico, 4 oct 2026) y la web de cada circuito. Nota de diversión: Laya local, escala 0–3, misma pregunta para los 10. Fuera de la hora: Lloret 62, Altafulla 68, Osona (Vic) 69, Tarraco 78, Salou 80, Palamós 92, Calafat 106. No entran simuladores ni pistas de radiocontrol.
+</p>
+</section>
+</main>
+<!-- Footer (Shared Component JSON) -->
+<footer class="bg-surface-container-low dark:bg-inverse-surface border-t border-outline-variant dark:border-outline docked full-width bottom">
+<div class="w-full py-8 px-4 lg:px-10 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex flex-col items-center md:items-start gap-1">
+<span class="font-headline-sm text-headline-sm text-primary dark:text-inverse-on-surface font-extrabold tracking-tight">BCN KARTING</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant text-center md:text-left">
+          Ranking de alquiler a una hora de Barcelona. El nombre de cada circuito abre su punto en el mapa.
+        </p>
+</div>
+</div>
+</footer>
+<!-- Micro-Interactivity Script (Filtros, Leaflet & Dark Mode) -->
+<script>
+    const themeBtn = document.getElementById('theme-toggle');
+    const htmlElem = document.documentElement;
+    themeBtn.addEventListener('click', () => {
+      htmlElem.classList.toggle('dark');
+      localStorage.setItem('kart-theme', htmlElem.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    const tracks = [
+      { id: 'sallent', name: 'Karting Sallent', keys: ['Sallent'], lat: 41.7850726, lng: 1.8894496, outdoor: true, web: 'https://www.kartingsallent.com/', desc: 'Outdoor · 53 min · nota 1,98' },
+      { id: 'blanes', name: 'Karting Club Blanes', keys: ['Blanes'], lat: 41.6725532, lng: 2.7625895, outdoor: true, web: 'https://www.kartingblanes.com/', desc: 'Outdoor · 56 min · nota 1,94' },
+      { id: 'gene', name: 'Gené Karting', keys: ['Gené', 'Gene'], lat: 41.3109122, lng: 2.0254970, outdoor: false, web: 'https://barcelonagenekarting.com/', desc: 'Indoor · 22 min · nota 1,91' },
+      { id: 'indoor', name: 'Indoor Karting Barcelona', keys: ['Indoor Karting', 'Sant Feliu'], lat: 41.3946446, lng: 2.0340665, outdoor: false, web: 'https://indoorkartingbarcelona.com/', desc: 'Indoor · 21 min · nota 1,86' },
+      { id: 'vendrell', name: 'Karting Vendrell', keys: ['Vendrell'], lat: 41.19880, lng: 1.52816, outdoor: true, web: 'https://kartingvendrell.com/', desc: 'Outdoor · 54 min · nota 1,84' },
+      { id: 'cardedeu', name: 'Karting Cardedeu', keys: ['Cardedeu'], lat: 41.6340220, lng: 2.3368210, outdoor: true, web: 'https://www.kartingcardedeu.com/', desc: 'Outdoor · 36 min · nota 1,77' },
+      { id: 'nurb', name: 'Nürburgreen Indoor', keys: ['Nürburgreen', 'Nurburgreen', 'Franqueses'], lat: 41.62109, lng: 2.31170, outdoor: false, web: 'https://nurburgreen.net/', desc: 'Indoor · 36 min · nota 1,75' },
+      { id: 'castelloli', name: 'Karting ParcMotor Castellolí', keys: ['Castellolí', 'Castelloli', 'ParcMotor'], lat: 41.5918625, lng: 1.6925436, outdoor: true, web: 'https://www.kartingparcmotor.com/', desc: 'Outdoor · 57 min · nota 1,69' },
+      { id: 'mini', name: 'Karting Minilandia', keys: ['Minilandia'], lat: 41.27565, lng: 2.04767, outdoor: true, web: 'https://www.kartingminilandia.com/', desc: 'Outdoor · 18 min · nota 1,65' },
+      { id: 'penedes', name: 'Scratch Indoor Penedès', keys: ['Penedès', 'Penedes', 'Vilafranca', 'Scratch'], lat: 41.3326924, lng: 1.6818058, outdoor: false, web: 'https://kartingpenedes.com/', desc: 'Indoor · 49 min · nota 1,58' }
+    ];
+
+    const map = L.map('circuit-map', { scrollWheelZoom: false }).setView([41.45, 2.05], 9);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    const baseStyle = (outdoor) => ({
+      radius: 8,
+      fillColor: outdoor ? '#0A3D22' : '#006E2C',
+      color: '#032612',
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0.95
+    });
+    const hiStyle = { radius: 14, fillColor: '#18E667', color: '#032612', weight: 3, fillOpacity: 1 };
+
+    function popupHtml(pt) {
+      const ruta = 'https://www.google.com/maps/dir/?api=1&destination=' + pt.lat + ',' + pt.lng;
+      return '<a href="' + pt.web + '" target="_blank" rel="noopener noreferrer"><strong>' + pt.name + '</strong></a>'
+        + '<br><span style="font-size:12px;color:#414942;">' + pt.desc + '</span>'
+        + '<br><a class="ruta" href="' + ruta + '" target="_blank" rel="noopener noreferrer">Ruta</a>';
+    }
+
+    const markers = tracks.map(pt => {
+      const marker = L.circleMarker([pt.lat, pt.lng], baseStyle(pt.outdoor)).addTo(map);
+      marker.bindPopup(popupHtml(pt));
+      marker.on('click', () => highlight(pt.id, false));
+      return { ...pt, marker };
+    });
+
+    let selected = null;
+    function highlight(id, open) {
+      selected = id;
+      markers.forEach(m => {
+        m.marker.setStyle(m.id === id ? hiStyle : baseStyle(m.outdoor));
+        if (m.id === id && open !== false) m.marker.openPopup();
+      });
+    }
+
+    function findTrack(text) {
+      return tracks.find(t => t.keys.some(k => text.indexOf(k) !== -1));
+    }
+
+    function go(id) {
+      const m = markers.find(x => x.id === id);
+      if (!m) return;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.getElementById('circuit-map').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      map.setView([m.lat, m.lng], 12);
+      highlight(id, true);
+    }
+
+    window.focusTrack = function (_lat, _lng, name) {
+      const hit = findTrack(name);
+      if (hit) go(hit.id);
+    };
+
+    function wirePlace(el) {
+      if (el.classList.contains('place')) return;
+      const hit = findTrack(el.textContent || '');
+      if (!hit) return;
+      el.classList.add('place');
+      el.setAttribute('role', 'link');
+      el.tabIndex = 0;
+      const run = () => go(hit.id);
+      el.addEventListener('click', run);
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); run(); }
+      });
+    }
+    document.querySelectorAll('h3, .space-y-2\\.5 > div span:first-child').forEach(wirePlace);
+    document.querySelectorAll('main span').forEach(el => {
+      if (el.childElementCount || el.textContent.trim().length > 48) return;
+      wirePlace(el);
+    });
+
+    document.querySelectorAll('.space-y-2\\.5 > div').forEach(row => {
+      const hit = findTrack(row.textContent);
+      if (hit) row.dataset.trackType = hit.outdoor ? 'outdoor' : 'indoor';
+    });
+
+    window.setFilter = function (type) {
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('bg-primary-container', 'text-on-primary', 'font-black');
+        btn.classList.add('text-on-surface-variant', 'font-bold');
+        btn.setAttribute('aria-pressed', 'false');
+      });
+      const activeBtn = document.getElementById('filter-' + type);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-on-surface-variant', 'font-bold');
+        activeBtn.classList.add('bg-primary-container', 'text-on-primary', 'font-black');
+        activeBtn.setAttribute('aria-pressed', 'true');
+      }
+      const show = (kind) => type === 'all' || kind === type;
+      document.querySelectorAll('.circuit-card').forEach(card => {
+        card.classList.toggle('hidden', !show(card.getAttribute('data-track-type')));
+      });
+      document.querySelectorAll('.space-y-2\\.5 > div[data-track-type]').forEach(row => {
+        row.classList.toggle('hidden', !show(row.dataset.trackType));
+      });
+      markers.forEach(item => {
+        const kind = item.outdoor ? 'outdoor' : 'indoor';
+        if (show(kind)) item.marker.addTo(map);
+        else map.removeLayer(item.marker);
+      });
+    };
+  </script>
+</body></html>
